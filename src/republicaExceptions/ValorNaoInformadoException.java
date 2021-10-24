@@ -1,4 +1,4 @@
-package republicaExecptions;
+package republicaExceptions;
 
 public class ValorNaoInformadoException extends Exception {
 	 
