@@ -1,0 +1,2 @@
+conta de luz;luz;650
+internet;conta fixa;200
