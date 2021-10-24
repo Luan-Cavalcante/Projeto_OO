@@ -1,7 +1,7 @@
 package republicaExecptions;
 
 
-public class DescricaoNaoInformadaExceptio extends Exception {
+public class DescricaoNaoInformadaException extends Exception {
 	 
     /**
 	 * Essa excessão será lançada sempre que o usuário informar uma descrição
@@ -9,7 +9,7 @@ public class DescricaoNaoInformadaExceptio extends Exception {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public DescricaoNaoInformadaExceptio(String message) {
+	public DescricaoNaoInformadaException(String message) {
         super(message);
     }
 }

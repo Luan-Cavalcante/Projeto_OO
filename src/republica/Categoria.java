@@ -1,4 +1,5 @@
 package republica;
+import republicaExecptions.*;
 
 public class Categoria {
 
@@ -14,11 +15,15 @@ public class Categoria {
     }
 
     public String getDescricao() { // Deve retornar o valor da metodo descricaoCategoria
-    return descricaoCategoria;
-}
+    	return descricaoCategoria;
+    }
 
-    public void setDescricao() { // Deve setar o valor da metodo descricaoCategoria
-  
-}
+    public void setDescricao(String descricaoCategoria) throws DescricaoNaoInformadaException{ // Deve setar o valor da metodo descricaoCategoria
+    	if (descricaoCategoria == null) {
+    		throw new DescricaoNaoInformadaException("Erro: Descrição da categoria não informada!");
+    	} else {
+    		this.descricaoCategoria = descricaoCategoria;
+    	}
+    }
     
 }
