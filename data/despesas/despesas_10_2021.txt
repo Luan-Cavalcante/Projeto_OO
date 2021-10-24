@@ -1,2 +1,4 @@
 conta de luz;luz;650
 internet;conta fixa;200
+agua;conta fixa;220
+alimentação;alimentação;150

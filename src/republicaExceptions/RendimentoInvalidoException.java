@@ -1,4 +1,4 @@
-package republicaExecptions;
+package republicaExceptions;
 
 	public class RendimentoInvalidoException extends Exception {
 		 
