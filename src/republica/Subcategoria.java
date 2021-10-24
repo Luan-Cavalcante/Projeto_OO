@@ -1,5 +1,5 @@
 package republica;
-
+import republicaExceptions.*;
 public class Subcategoria {
 	    
 	    	String descricaoSubcategoria;
@@ -13,16 +13,13 @@ public class Subcategoria {
 	        return descricaoSubcategoria;
 	    }
 
-	    public void setDescricao(String descricao) { // Deve setar o valor da metodo descricaoSubcategoria
-	    	  try
+	    public void setDescricao(String descricao) throws DescricaoNaoInformadaException { // Deve setar o valor da metodo descricaoSubcategoria
+		  if (descricao.length() <  1)
 	    	  {
-	    	    this.descricaoSubcategoria = descricao;
+			  throw new DescricaoNaoInformadaException("O tamanho da decrição deve ser maior ou igual a 1 caractere");
 	    	  }
-	    	  catch(DescricaoNaoInformadaException) e) //captura a possível exeção de valor nulo
-	    	  {
-	    	    //TRATAMENTO DA exceção
-	    	    System.out.println("A Descrição da subcategoria está nula, para solucional tal o problema, foi lhe atribuito um valor default.");
+		  else
+			  this.descricaoSubcategoria = descricao;
 	    	  }
 	      
 	    }
-}
