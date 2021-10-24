@@ -1,13 +1,11 @@
 package testes;
 import republica.Subcategoria;
 
-class  Demo
+class  DemoSubcategoria
 {
 private static Subcategoria luz;
 static                  //static block
 {
-
-
 
 
 }
