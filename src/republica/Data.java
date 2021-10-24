@@ -1,5 +1,5 @@
 package republica;
-import republicaExecptions.*;
+import republicaExceptions.*;
 
 public class Data {
 

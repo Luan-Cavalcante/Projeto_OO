@@ -7,6 +7,7 @@ import java.util.List;
 public class SGA {
 	static List<Categoria> categorias = new ArrayList<Categoria>();
 	static List<Despesa> despesas = new ArrayList<Despesa>();
+	static List<Residente> residentes = new ArrayList<Residente>();
 	
 	private static Data inputData() {
 		Data data;
@@ -17,7 +18,7 @@ public class SGA {
 			try {
 				data = new Data(mes, ano);
 				break;
-			} catch(Exception e) {
+			} catch(Throwable e) {
 				JOptionPane.showMessageDialog(null, "Data inválida, tente novamente");
 			}
 		}
@@ -29,9 +30,9 @@ public class SGA {
 		while(true) {
 			
 			try {
-				valor = Float.parseFloat(JOptionPane.showInputDialog("Digite o valor da despesa"));
+				valor = Float.parseFloat(JOptionPane.showInputDialog("Digite o valor"));
 				break;
-			} catch(Exception e) {
+			} catch(Throwable e) {
 				JOptionPane.showMessageDialog(null, "Valor inválido, tente novamente");
 			}
 		}
@@ -52,7 +53,7 @@ public class SGA {
 				try {
 					categoria = new Categoria(descricaoCategoria);
 					break;
-				} catch(Exception e) {
+				} catch(Throwable e) {
 					JOptionPane.showMessageDialog(null, "Valor inválido, tente novamente");
 				}
 			} else {
@@ -60,7 +61,7 @@ public class SGA {
 					subcategoria = new Subcategoria(descricaoSubcategoria);
 					categoria = new Categoria(descricaoCategoria, subcategoria);
 					break;
-				} catch(Exception e) {
+				} catch(Throwable e) {
 					JOptionPane.showMessageDialog(null, "Valor inválido, tente novamente");
 				}
 			}
@@ -111,7 +112,7 @@ public class SGA {
 		
 		do {
 			String strOpcao = JOptionPane.showInputDialog("Escolha uma opção: \n"
-					+ "1 - Cadastrar pessoa \n"
+					+ "1 - Cadastrar residente \n"
 					+ "2 - Cadastrar despesa\n"
 					+ "3 - Cadastrar categoria\n"
 					+ "4 - Realizar pagamento\n"
@@ -120,8 +121,25 @@ public class SGA {
 			
 			switch (opcao) {
 			case 1:
-				//cadastrar pessoa
-			
+				//cadastrar residente
+				Residente residente;
+				String nome;
+				String email;
+				float rendimentos;
+				
+				while(true) {
+				
+					nome = JOptionPane.showInputDialog("Digite o nome do residente");
+					email = JOptionPane.showInputDialog("Digite o email do residente");
+					rendimentos = inputValor();
+					try {
+						residente = new Residente(nome, email, rendimentos);
+						residentes.add(residente);
+						break;
+					} catch (Throwable e) {
+						JOptionPane.showMessageDialog(null, "Dados do residente inválidos, tente novamente");
+					}
+				}
 
 				break;
 			case 2: 
@@ -142,7 +160,7 @@ public class SGA {
 						despesa = new Despesa(valor, data, descricao, categoria);
 						despesas.add(despesa);
 						break;
-					} catch (Exception e) {
+					} catch (Throwable e) {
 						JOptionPane.showMessageDialog(null, "Valor inválido, tente novamente");
 					}
 				}
@@ -182,6 +200,11 @@ public class SGA {
 		for (int i=0; i<despesas.size(); i++) {
 			Despesa despesa = despesas.get(i);
 			JOptionPane.showMessageDialog(null, despesa);
+		}
+		
+		for (int i=0; i<residentes.size(); i++) {
+			Residente residente = residentes.get(i);
+			JOptionPane.showMessageDialog(null, residente);
 		}
 		
 		
