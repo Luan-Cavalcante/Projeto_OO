@@ -18,7 +18,7 @@ public class Despesa {
         return valor;
     }
 
-    public void setValor() { // Deve setar o valor da metodo valor
+    public void setValor(float valor) { // Deve setar o valor da metodo valor
       
     }
 
@@ -29,11 +29,11 @@ public class Despesa {
     public void setData() { // Deve setar o valor da metodo data
   
 }
-    public String getDescricao() { // Deve retornar o valor da metodo descrição
+    public String getDescricao() { // Deve retornar o valor da metodo descriï¿½ï¿½o
         return descricao;
     }
 
-    public void setDescricao() { // Deve setar o valor da metodo descrição
+    public void setDescricao() { // Deve setar o valor da metodo descriï¿½ï¿½o
       
     }
 
