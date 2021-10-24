@@ -46,8 +46,8 @@ public class SGA {
 		while(true) {
 			descricaoCategoria = JOptionPane.showInputDialog("Digite a descrição da categoria criada");
 			descricaoSubcategoria = JOptionPane.showInputDialog("Digite a descrição da subcategoria\n"
-					+ "(se não houver subcategoria, digite 0)");
-			if (descricaoSubcategoria == "0") {
+					+ "(se não houver subcategoria, aperte apenas enter)");
+			if (descricaoSubcategoria == "") {
 				System.out.println("Nao tem subcategoria");
 				try {
 					categoria = new Categoria(descricaoCategoria);
@@ -91,6 +91,7 @@ public class SGA {
 			categoriaEscolhida = Integer.parseInt(JOptionPane.showInputDialog(opcoesCategorias));
 			if (categoriaEscolhida == -1) {
 				categoria = createCategoria();
+				categorias.add(categoria);
 				break;
 			} else if (categoriaEscolhida >=0 && categoriaEscolhida < categorias.size()) {
 				categoria = categorias.get(categoriaEscolhida);
@@ -107,7 +108,6 @@ public class SGA {
 	public static void main (String[] args) {
 		int opcao = 0;
 		
-		System.out.println("ola");
 		
 		do {
 			String strOpcao = JOptionPane.showInputDialog("Escolha uma opção: \n"
@@ -172,5 +172,18 @@ public class SGA {
 			
 			
 		}while(opcao!=0);
+		
+		// So para testar, imprimir todas despesas e categorias
+		for (int i=0; i<categorias.size(); i++) {
+			Categoria categoria = categorias.get(i);
+			JOptionPane.showMessageDialog(null, categoria);
+		}
+		
+		for (int i=0; i<despesas.size(); i++) {
+			Despesa despesa = despesas.get(i);
+			JOptionPane.showMessageDialog(null, despesa);
+		}
+		
+		
 	}
 }
