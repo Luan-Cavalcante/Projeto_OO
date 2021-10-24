@@ -46,3 +46,10 @@ Link para a UML editável:
 
 >**NroPagamentosDiferenteNroResidentesAException**: Trata casos quando o número de pagamentos(parcela por pessoa), por alguma razão é maior que o número de residentes
 
+>**DataInvalidaException**: Trata casos quando a data informada é invalida
+
+>**ValorNaoInformadoException**: Trata casos quando não é informado o valor das despesas
+
+>**RendimentoInvalidoException**: Trata casos quando é informado um valor inválido de redimento
+
+>**DadosPessoaisIncompletosException**: Trata casos quando não é informado algum dos dados pessoais do residente
