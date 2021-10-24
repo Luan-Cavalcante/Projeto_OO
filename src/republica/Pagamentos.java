@@ -2,9 +2,9 @@ package republica;
 import republicaExceptions.*;
 public class Pagamentos {
 	Residente[] listaResidentes = new Residente[0];
-	int[] listaPagamentos = new int[0];
+	float[] listaPagamentos = new float[0];
 
-public Pagamentos( Residente[] listaResidentes, int[] listaPagamentos) {
+public Pagamentos( Residente[] listaResidentes, float[] listaPagamentos) {
 	this.listaResidentes = listaResidentes;
 	this.listaPagamentos = listaPagamentos;
 }
@@ -24,11 +24,11 @@ public void setListaResidentes(Residente[] listaResidentes) throws ListadeReside
 	}
 }
 
-public int[] getListaPagamentos() { 
+public float[] getListaPagamentos() { 
     return listaPagamentos;
 }
 
-public void setListaPagamentos(int[] listaPagamentos) throws NroPagamentosDiferenteNroResidentesAException{
+public void setListaPagamentos(float[] listaPagamentos) throws NroPagamentosDiferenteNroResidentesAException{
 
 	if (this.listaResidentes.length != listaPagamentos.length)
 	{
