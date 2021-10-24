@@ -29,7 +29,7 @@ public class Categoria {
     }
 
     public void setDescricao(String descricaoCategoria) throws DescricaoNaoInformadaException{ // Deve setar o valor da metodo descricaoCategoria
-    	if (descricaoCategoria == null) {
+    	if (descricaoCategoria == null || descricaoCategoria == "") {
     		throw new DescricaoNaoInformadaException("Erro: Descrição da categoria não informada!");
     	} else {
     		this.descricaoCategoria = descricaoCategoria;

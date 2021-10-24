@@ -43,7 +43,7 @@ public class Despesa {
     }
 
     public void setDescricao(String descricao) throws DescricaoNaoInformadaException { // Deve setar o valor da metodo descri��o
-    	if (descricao == null) {
+    	if (descricao == null || descricao == "") {
     		throw new DescricaoNaoInformadaException("Erro: Descrição da categoria não informada!");
     	} else {
     		this.descricao = descricao;
