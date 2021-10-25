@@ -54,7 +54,7 @@ public class SGA {
 			
 		{
 			String valor = String.format("R$ %.2f\n",pagmentos.getListaPagamentos()[i]);
-			model.addRow(new Object[]{pagmentos.getListaResidentes()[i].getNome(), pagmentos.getListaResidentes()[i].getNome(),valor});
+			model.addRow(new Object[]{pagmentos.getListaResidentes()[i].getNome(), pagmentos.getListaResidentes()[i].getEmail(),valor});
 			valor_total = valor_total + pagmentos.getListaPagamentos()[i];
 		}
 		
