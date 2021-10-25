@@ -1,7 +1,12 @@
 package republica;
 import java.util.*;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Scanner;
 
 import republicaExceptions.*;
@@ -14,13 +19,74 @@ public class Republica {
 	 public Republica () {
 	        }
 
-	    public void addResidente(String nome, String email, float rendimento) { // Deve adiciocar um residente no arquivo
-	    	Residente r = new Residente(nome, email, rendimento); 
+	    public void addResidente(Residente residente) throws IOException  { // Deve adiciocar um residente no arquivo
+	    
+		    String nome = residente.nome;
+		    String email = residente.email;
+		    String redimento = String.format(Locale.US,"%.2f",residente.rendimentos);
+		    String linha = String.format("\n%s;%s;%s",nome,email,redimento);
+	    	
+	    	
+			String arquivo = "data/residentes/alunos.txt";
+	        try {
+	            File myObj = new File(arquivo);
+	            myObj.createNewFile();
+	          } catch (IOException e) {
+	            e.printStackTrace();
+	          }
+	        
+	        
+	        try {
+	            FileWriter myWriter = new FileWriter(arquivo,true);
+	            myWriter.write(linha);
+	            myWriter.close();
+	          } catch (IOException e) {
+	            e.printStackTrace();
+	           }
+			
+			
+			
 	    }
 
-	    public void addDespesa(float valor, Data data, String descricao, Categoria categoria) { // Deve setar o valor da metodo subcategoria
-	    //	Despesa d = new Despesa(valor, data, descricao, categoria);
-	      
+	    public void addDespesa(Despesa despesa) throws IOException { // Deve setar o valor da metodo subcategoria
+		    String nome = despesa.getDescricao();
+		    String categoria = despesa.getCategoria().getDescricao();
+		    int mes = despesa.getData().getMes();
+		    int ano = despesa.getData().getAno();
+		    
+		    Subcategoria subcategoria = despesa.getCategoria().getSubcategoria();
+		    if (subcategoria != null)
+		    {
+		    	categoria = categoria + "-" + subcategoria.getDescricao();
+		    }
+		    String valor = String.format(Locale.US,"%.2f",despesa.getValor());
+		    String linha = String.format("\n%s;%s;%s",nome,categoria,valor);
+	    	
+		    
+		    
+		    String arquivo = String.format("data/despesas/despesas_%02d_%d.txt",mes,ano);
+
+	        
+	        
+	        try {
+	            File myObj = new File(arquivo);
+	            myObj.createNewFile();
+	          } catch (IOException e) {
+	            e.printStackTrace();
+	          }
+	        
+	        
+	        try {
+	            FileWriter myWriter = new FileWriter(arquivo,true);
+	            myWriter.write(linha);
+	            myWriter.close();
+	          } catch (IOException e) {
+	            e.printStackTrace();
+	           }
+	        
+	        
+	        
+	        
 	    }
 
 	    public Pagamentos pagamentoIgualitario(int mes, int ano) throws Exception {
@@ -66,7 +132,12 @@ public class Republica {
 		      while (despesas.hasNext())
 		      {
 
-			  String[] linha = despesas.next().split(";");
+			  String linha_inteira = despesas.next();
+			  if (linha_inteira == "\n")
+				  {
+				  	continue;
+				  }
+			  String[] linha = linha_inteira.split(";");
 			  String nameDespesa = linha[0];
 			  String categoriaDespesa = linha[1];
 			  float valorDespesa =  Float.parseFloat(linha[2]);
@@ -77,8 +148,9 @@ public class Republica {
 
 
 		    } catch (FileNotFoundException e) {
-		      System.out.println("O Arquivo do mês e ano informado não foi encontrado. Tenha certeza de ter cadastrado despesas para o mês e ano informado.");
-		      e.printStackTrace();}
+		    	throw new ArquivoNaoEncontradoException("O arquivo não foi encontrado. Tenha certeza de ter cadastrado despesas nessa data anteriormente...");
+		    	
+		    }
 
 
 		    Residente[] listaResidentes = new Residente[0]; //Cria um vetor de residentes
@@ -91,7 +163,12 @@ public class Republica {
 			      while (residente.hasNext())
 			      {
 
-				  String[] linha = residente.next().split(";");
+				  String linha_inteira = residente.next();
+				  if (linha_inteira == "\n")
+					  {
+					  	continue;
+					  }
+				  String[] linha = linha_inteira.split(";");
 				  String nomeresidente = linha[0];
 				  String emailresidente = linha[1];
 				  float redimentoresidente =  Float.parseFloat(linha[2]);
@@ -112,8 +189,8 @@ public class Republica {
 
 
 			    } catch (FileNotFoundException e) {
-			      System.out.println("Ocorreu um erro ao abrir o arquivo dos residentes...");
-			      e.printStackTrace();
+			    	throw new ArquivoNaoEncontradoException("O arquivo não foi encontrado. Tenha certeza de ter cadastrado despesas nessa data anteriormente...");
+
 			      }
 
 		    //cria a lista de inteiros que cada residente deverá pagar
@@ -179,7 +256,12 @@ public class Republica {
 		      while (despesas.hasNext())
 		      {
 
-			  String[] linha = despesas.next().split(";");
+				  String linha_inteira = despesas.next();
+				  if (linha_inteira == "\n")
+					  {
+					  	continue;
+					  }
+				  String[] linha = linha_inteira.split(";");
 			  String nameDespesa = linha[0];
 			  String categoriaDespesa = linha[1];
 			  float valorDespesa =  Float.parseFloat(linha[2]);
@@ -190,8 +272,8 @@ public class Republica {
 
 
 		    } catch (FileNotFoundException e) {
-		      System.out.println("O Arquivo do mês e ano informado não foi encontrado. Tenha certeza de ter cadastrado despesas para o mês e ano informado.");
-		      e.printStackTrace();}
+		    	throw new ArquivoNaoEncontradoException("O arquivo não foi encontrado. Tenha certeza de ter cadastrado despesas nessa data anteriormente...");
+		    }
 
 
 		    Residente[] listaResidentes = new Residente[0]; //Cria um vetor de residentes
@@ -203,8 +285,12 @@ public class Republica {
 			      residente.useDelimiter("\n");
 			      while (residente.hasNext())
 			      {
-
-				  String[] linha = residente.next().split(";");
+					  String linha_inteira = residente.next();
+					  if (linha_inteira == "\n")
+						  {
+						  	continue;
+						  }
+					  String[] linha = linha_inteira.split(";");
 				  String nomeresidente = linha[0];
 				  String emailresidente = linha[1];
 				  float redimentoresidente =  Float.parseFloat(linha[2]);
@@ -225,8 +311,8 @@ public class Republica {
 
 
 			    } catch (FileNotFoundException e) {
-			      System.out.println("Ocorreu um erro ao abrir o arquivo dos residentes...");
-			      e.printStackTrace();
+			    	throw new ArquivoNaoEncontradoException("O arquivo não foi encontrado. Tenha certeza de ter cadastrado despesas nessa data anteriormente...");
+
 			      }
 
 		    //Calcula redimentos dos residentes total para fazer uma proporção

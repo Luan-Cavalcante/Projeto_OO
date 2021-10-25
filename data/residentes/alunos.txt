@@ -1,3 +1,3 @@
-Jhonathan Nicolas;jhonathan@email.com;3000
-Pedro Henrique;pedro@email.com;3100
-Iago Carvalho;iago@email.com;3500
+
+João;joao@gmail.com;3500.00
+Maria;maria@email.com;1200.00

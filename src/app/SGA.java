@@ -1,14 +1,23 @@
 package app;
 import republica.*;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
 
 public class SGA {
 	static List<Categoria> categorias = new ArrayList<Categoria>();
 	static List<Despesa> despesas = new ArrayList<Despesa>();
-	static List<Residente> residentes = new ArrayList<Residente>();
-	
+	private static Republica republica;
 	private static Data inputData() {
 		Data data;
 		int mes, ano;
@@ -24,6 +33,41 @@ public class SGA {
 		}
 		return data;
 	}
+	
+
+	private static void imprimirTabela( Pagamentos pagmentos) {
+		
+		
+		String cabecalho = "Nome\tEmail\tValor a Pagar\n";
+		Object[] cols = {
+			    "Nome","Email","Valor a Pagar"
+			};
+		String tabela = cabecalho;
+		int len = pagmentos.getListaResidentes().length;
+		DefaultTableModel model = new DefaultTableModel(); 
+		
+		model.addColumn("Nome"); 
+		model.addColumn("Email"); 
+		model.addColumn("Valor a Pagar");
+		float valor_total = 0;
+		for (int i =0;i < len;i++)
+			
+		{
+			String valor = String.format("R$ %.2f\n",pagmentos.getListaPagamentos()[i]);
+			model.addRow(new Object[]{pagmentos.getListaResidentes()[i].getNome(), pagmentos.getListaResidentes()[i].getNome(),valor});
+			valor_total = valor_total + pagmentos.getListaPagamentos()[i];
+		}
+		
+		String valor = String.format("R$ %.2f\n",valor_total);
+		model.addRow(new Object[]{"", "VALOR TOTAL",valor});
+
+		JTable tabela_pagamentos  =new JTable(model);
+		JOptionPane.showMessageDialog(null, new JScrollPane(tabela_pagamentos));
+		
+		
+	}
+	
+	
 	
 	private static float inputValor() {
 		float valor;
@@ -48,8 +92,7 @@ public class SGA {
 			descricaoCategoria = JOptionPane.showInputDialog("Digite a descrição da categoria criada");
 			descricaoSubcategoria = JOptionPane.showInputDialog("Digite a descrição da subcategoria\n"
 					+ "(se não houver subcategoria, aperte apenas enter)");
-			if (descricaoSubcategoria == "") {
-				System.out.println("Nao tem subcategoria");
+			if (descricaoSubcategoria.isEmpty()) {
 				try {
 					categoria = new Categoria(descricaoCategoria);
 					break;
@@ -106,7 +149,7 @@ public class SGA {
 	
 	
 	
-	public static void main (String[] args) {
+	public static void main (String[] args) throws Exception {
 		int opcao = 0;
 		
 		
@@ -119,6 +162,7 @@ public class SGA {
 					+ "0 - Sair do programa");
 			opcao = Integer.parseInt(strOpcao);
 			
+			Republica republica = new Republica();
 			switch (opcao) {
 			case 1:
 				//cadastrar residente
@@ -134,7 +178,7 @@ public class SGA {
 					rendimentos = inputValor();
 					try {
 						residente = new Residente(nome, email, rendimentos);
-						residentes.add(residente);
+						republica.addResidente(residente);
 						break;
 					} catch (Throwable e) {
 						JOptionPane.showMessageDialog(null, "Dados do residente inválidos, tente novamente");
@@ -154,11 +198,11 @@ public class SGA {
 				
 					data = inputData();
 					valor = inputValor();
-					descricao = JOptionPane.showInputDialog("Digite a descricao da despesa");
+					descricao = JOptionPane.showInputDialog("Digite o nome do credor da despesa");
 					categoria = inputCategoria();
 					try {
 						despesa = new Despesa(valor, data, descricao, categoria);
-						despesas.add(despesa);
+						republica.addDespesa(despesa);
 						break;
 					} catch (Throwable e) {
 						JOptionPane.showMessageDialog(null, "Valor inválido, tente novamente");
@@ -176,7 +220,51 @@ public class SGA {
 				break;
 	
 			case 4:
-				// realizar pagamento
+				
+				String strOpcao_pag = JOptionPane.showInputDialog("Escolha uma opção de pagamento: \n"
+						+ "1 - Pagamento Igualitário \n"
+						+ "2 - Pagamento Proporcional\n"
+						+ "0 - Voltar");
+				int opcao_pag = Integer.parseInt(strOpcao_pag);
+				
+				switch(opcao_pag)
+				{
+
+					case 1:
+						Data data_file_i = inputData();	
+						int mes_i = data_file_i.getMes();
+						int ano_i = data_file_i.getAno();
+						
+						try {
+							Pagamentos pagIgualitario = republica.pagamentoIgualitario(mes_i,ano_i);
+							imprimirTabela(pagIgualitario);
+							break;
+						} catch(Throwable e) {
+							JOptionPane.showMessageDialog(null, "O arquivo não foi encontrado. Tenha certeza de ter cadastrado despesas nessa data anteriormente...");
+						}
+						
+						
+						break;
+					case 2:
+						Data data_file_p = inputData();	
+						int mes_p = data_file_p.getMes();
+						int ano_p = data_file_p.getAno();
+						
+						try {
+							Pagamentos pagProporcional = republica.pagamentoProporcional(mes_p, ano_p);
+							imprimirTabela(pagProporcional);
+							break;
+						} catch(Throwable e) {
+							JOptionPane.showMessageDialog(null, "O arquivo não foi encontrado. Tenha certeza de ter cadastrado despesas nessa data anteriormente...");
+						}
+					
+
+						
+						break;
+					case 0:
+						break;
+				}
+
 				break;
 	
 			case 0: 
@@ -191,22 +279,7 @@ public class SGA {
 			
 		}while(opcao!=0);
 		
-		// So para testar, imprimir todas despesas e categorias
-		for (int i=0; i<categorias.size(); i++) {
-			Categoria categoria = categorias.get(i);
-			JOptionPane.showMessageDialog(null, categoria);
-		}
-		
-		for (int i=0; i<despesas.size(); i++) {
-			Despesa despesa = despesas.get(i);
-			JOptionPane.showMessageDialog(null, despesa);
-		}
-		
-		for (int i=0; i<residentes.size(); i++) {
-			Residente residente = residentes.get(i);
-			JOptionPane.showMessageDialog(null, residente);
-		}
-		
+
 		
 	}
 }

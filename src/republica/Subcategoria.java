@@ -4,8 +4,8 @@ public class Subcategoria {
 	    
 	    	String descricaoSubcategoria;
 
-	    public Subcategoria (String descricao) {
-	        this.descricaoSubcategoria = descricao;
+	    public Subcategoria (String descricao) throws DescricaoNaoInformadaException {
+	        this.setDescricao(descricao);
 	    }
 
 	    public String getDescricao() { // Deve retornar o valor da metodo descricaoSubcategoria

@@ -6,9 +6,9 @@ public class Data {
 	int mes;
 	int ano;
 
-    public Data (int mes, int ano) {
-        this.mes = mes;
-        this.ano = ano;
+    public Data (int mes, int ano) throws DataInvalidaException {
+        this.setMes(mes);
+        this.setAno(ano);
     }
 
     public void setMes(int mes) throws DataInvalidaException { 

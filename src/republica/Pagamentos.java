@@ -4,9 +4,9 @@ public class Pagamentos {
 	Residente[] listaResidentes = new Residente[0];
 	float[] listaPagamentos = new float[0];
 
-public Pagamentos( Residente[] listaResidentes, float[] listaPagamentos) {
-	this.listaResidentes = listaResidentes;
-	this.listaPagamentos = listaPagamentos;
+public Pagamentos( Residente[] listaResidentes, float[] listaPagamentos) throws ListadeResidentesVaziaException, NroPagamentosDiferenteNroResidentesAException {
+	this.setListaResidentes(listaResidentes);
+	this.setListaPagamentos(listaPagamentos);
 }
 public Residente[] getListaResidentes() { 
     return listaResidentes;
